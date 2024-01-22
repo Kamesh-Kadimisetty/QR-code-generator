@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Code Generator</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <style>
+        body {
+            background-color: rgb(55, 134, 179);
+            font-family: Arial, sans-serif;
+        }
+        .center {
+            text-align: center;
+            color: white;
+            margin-top: 50px;
+        }
+        .input-center {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .input-center input[type="text"],
+        .input-center button {
+            padding: 10px 20px; 
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+        .input-center input[type="text"] {
+            margin-right: 10px;
+        }
+        .input-center button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        #qrcode {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        footer {
+            background-color: #333;
+            padding: 10px;
+            color: white;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .flower {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-image: url('flower.png');
+            background-size: cover;
+            animation: falling 5s linear infinite;
+        }
+        @keyframes falling {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="center">GAYATRI VIDYA PARISHAD COLLEGE OF ENGINEERING</h1>
+    <h1 class="center">QR Code Generator</h1>
+    <div class="input-center">
+        <input type="text" id="roll_no" placeholder="Enter 12 digit roll number" maxlength="12">
+        <button onclick="generateQR()">Generate QR Code</button>
+    </div>
+    <div id="qrcode"></div>
+
+    <script>
+        function generateQR() {
+            var roll_no = document.getElementById('roll_no').value;
+            if (roll_no.length != 12) {
+                alert("Invalid roll number. It should be 12 digits.");
+                return;
+            }
+            document.getElementById('qrcode').innerHTML = "";
+            var qrcode = new QRCode(document.getElementById("qrcode"), {
+                text: roll_no,
+                width: 256, 
+                height: 256 
+            });
+        }
+    </script>
+
+    <style>
+        footer {
+            background-color: #333;
+            padding: 10px;
+            color: white;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            left: 0; 
+        }
+    </style>
+
+    <footer>
+        <p>&copy; 2024 Copy right, All rights reserved. 
+            Developed by Kamesh Kadimisetty </p>
+    </footer>
+
+    <script>
+        // Add flowers falling on page load
+        window.addEventListener('load', function() {
+            for (var i = 0; i < 10; i++) {
+                var flower = document.createElement('div');
+                flower.classList.add('flower');
+                flower.style.left = Math.random() * 100 + 'vw';
+                flower.style.animationDelay = Math.random() * 5 + 's';
+                document.body.appendChild(flower);
+            }
+        });
+    </script>
+</body>
+</html>
+
