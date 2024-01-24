@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>QR Code Generator</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <style>
@@ -48,22 +50,6 @@
             bottom: 0;
             width: 100%;
         }
-        .flower {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background-image: url('flower.png');
-            background-size: cover;
-            animation: falling 5s linear infinite;
-        }
-        @keyframes falling {
-            0% {
-                transform: translateY(-100%);
-            }
-            100% {
-                transform: translateY(100vh);
-            }
-        }
     </style>
 </head>
 <body>
@@ -74,6 +60,9 @@
         <button onclick="generateQR()">Generate QR Code</button>
     </div>
     <div id="qrcode"></div>
+    <div class="input-center">
+        <button onclick="downloadQR()">Download QR Code</button> <!-- Moved download button below the generated QR -->
+    </div>
 
     <script>
         function generateQR() {
@@ -85,13 +74,26 @@
             document.getElementById('qrcode').innerHTML = "";
             var qrcode = new QRCode(document.getElementById("qrcode"), {
                 text: roll_no,
-                width: 256, 
-                height: 256 
+                width: 256, // Increased width to 256
+                height: 256 // Increased height to 256
             });
+        }
+
+        function downloadQR() {
+            var canvas = document.getElementById("qrcode").getElementsByTagName("canvas")[0];
+            var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            var link = document.createElement('a');
+            link.download = "qrcode.png";
+            link.href = image;
+            link.click();
         }
     </script>
 
     <style>
+        body {
+            background-color: rgb(55, 134, 179);
+        }
+
         footer {
             background-color: #333;
             padding: 10px;
@@ -108,19 +110,5 @@
         <p>&copy; 2024 Copy right, All rights reserved. 
             Developed by Kamesh Kadimisetty </p>
     </footer>
-
-    <script>
-        // Add flowers falling on page load
-        window.addEventListener('load', function() {
-            for (var i = 0; i < 10; i++) {
-                var flower = document.createElement('div');
-                flower.classList.add('flower');
-                flower.style.left = Math.random() * 100 + 'vw';
-                flower.style.animationDelay = Math.random() * 5 + 's';
-                document.body.appendChild(flower);
-            }
-        });
-    </script>
 </body>
 </html>
-
